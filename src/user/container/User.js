@@ -1,24 +1,30 @@
 import React, {useEffect} from 'react';
-import {PageHeader, Col, Row, Descriptions, Typography} from "antd";
+import {PageHeader, Col, Row, Descriptions, Typography, Spin, Space} from "antd";
 import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
-import {actions} from "../state";
+import {actions, Types} from "../state";
+import useFetchInfo from "../../common/hook/useFetchInfo";
 
-export default function User({ match }) {
+export default function User({match}) {
     const history = useHistory();
     const user = useSelector(state => state.user.user);
     const dispatch = useDispatch();
     const name = match.params.name;
     useEffect(() => {
         dispatch(actions.fetchUser(name));
-    }, [name]);
+    }, [dispatch, name]);
 
-    const isFetched = true;
-
+    // const isFetched = true;
+    const {isFetched, isSlow} = useFetchInfo(Types.FetchUser);
     return (
         <Row justify="center">
             <Col xs={24} md={20} lg={14}>
-                <PageHeader title="사용자정보" onBack={history.goBack}>
+                <PageHeader title={
+                    <Space>
+                        사용자 정보
+                        {isSlow && <Spin size="small"/>}
+                    </Space>
+                } onBack={history.goBack}>
                     {user && (
                         <Descriptions layout="vertical" bordered column={1}>
                             <Descriptions.Item label="이름">
