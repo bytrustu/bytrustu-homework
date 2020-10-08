@@ -7,8 +7,10 @@ import useFetchInfo from "../../common/hook/useFetchInfo";
 import History from "../../common/component/History";
 import Department from "../component/Department";
 import TagList from "../component/TagList";
+import useNeedLogin from "../../common/hook/useNeedLogin";
 
 export default function User({match}) {
+    useNeedLogin();
     const history = useHistory();
     const user = useSelector(state => state.user.user);
     const userHistory = useSelector(state => state.user.userHistory);

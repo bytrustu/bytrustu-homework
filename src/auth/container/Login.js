@@ -2,11 +2,19 @@ import React from 'react';
 import {Col, Row, Typography, Form, Input, Checkbox, Button} from "antd";
 import {Link} from "react-router-dom";
 import AuthLayout from "../component/AuthLayout";
+import {useDispatch} from "react-redux";
+import {actions} from "../state";
+import useBlockLoginUser from "../hook/useBlockLoginUser";
 
 export default function Login() {
+    useBlockLoginUser();
+    const dispatch = useDispatch();
+    function onFinish({username, password}) {
+        dispatch(actions.fetchLogin(username, password));
+    }
     return (
         <AuthLayout
-            onFinish={() => {}}
+            onFinish={onFinish}
         >
             <Form.Item
                 name="username"
