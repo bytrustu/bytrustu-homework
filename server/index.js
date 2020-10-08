@@ -52,7 +52,9 @@ app.get('/history', (req, res) => {
 app.post('/user/update', (req, res) => {
   setTimeout(() => {
     const { key, name, value, oldValue } = req.body;
+    console.log(key, name, value, oldValue)
     const sql = `UPDATE user SET ${key} = ? WHERE name = ?`;
+    console.log(sql)
     db.run(sql, [value, name], function (err) {
       if (err) {
         return console.error(err.message);
