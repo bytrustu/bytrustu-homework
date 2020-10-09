@@ -23,6 +23,10 @@ export default function User({match}) {
         dispatch(actions.fetchUserHistory(name));
     }, [dispatch, name]);
 
+    useEffect(() => {
+        return () => dispatch(actions.initialize());
+    }, [dispatch]);
+
     // const isFetched = true;
     const {isFetched, isSlow} = useFetchInfo(Types.FetchUser);
     return (
@@ -33,7 +37,7 @@ export default function User({match}) {
                         사용자 정보
                         {isSlow && <Spin size="small"/>}
                     </Space>
-                } onBack={history.goBack}>
+                } onBack={() => history.push('/')}>
                     {user && (
                         <Descriptions layout="vertical" bordered column={1}>
                             <Descriptions.Item label="이름">
